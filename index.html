@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A local customer development tracker for U.S. automotive parts sales teams.">
+  <title>AutoParts CRM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">AP</span><div><strong>AutoParts CRM</strong><small>U.S. Customer Development</small></div></div>
+    <button class="button primary" id="addCustomer">+ Add customer</button>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">SALES OVERVIEW</p><h1>Customer Pipeline</h1><p>Manage prospects, follow-ups, and opportunities in one place.</p></div>
+      <p class="today" id="today"></p>
+    </section>
+
+    <section class="stats" aria-label="Customer statistics">
+      <article><span class="stat-icon blue">◎</span><div><small>Total customers</small><strong id="totalStat">0</strong><span>All active records</span></div></article>
+      <article><span class="stat-icon amber">↗</span><div><small>Due for follow-up</small><strong id="dueStat">0</strong><span>Due today or overdue</span></div></article>
+      <article><span class="stat-icon purple">$</span><div><small>In quoting</small><strong id="quoteStat">0</strong><span>Active quotations</span></div></article>
+      <article><span class="stat-icon green">✓</span><div><small>Won customers</small><strong id="wonStat">0</strong><span>Deals closed</span></div></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading"><div><h2>Customer Directory</h2><p id="resultCount">0 customers</p></div><button class="button ghost danger" id="resetData">Reset demo data</button></div>
+      <div class="filters">
+        <label class="search"><span class="sr-only">Search company name</span><input id="searchInput" type="search" placeholder="Search company name…"><span aria-hidden="true">⌕</span></label>
+        <label><span class="sr-only">Filter by state</span><select id="stateFilter"><option value="">All states</option></select></label>
+        <label><span class="sr-only">Filter by customer type</span><select id="typeFilter"><option value="">All customer types</option></select></label>
+        <label><span class="sr-only">Filter by follow-up status</span><select id="statusFilter"><option value="">All statuses</option></select></label>
+        <button class="button ghost" id="clearFilters">Clear</button>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Company / Contact</th><th>Location</th><th>Type</th><th>Product interest</th><th>Status</th><th>Next follow-up</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="customerRows"></tbody></table>
+        <div class="empty" id="emptyState" hidden><span>⌕</span><h3>No customers found</h3><p>Try changing your search or filters.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="customerDialog">
+    <form id="customerForm" method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">CUSTOMER RECORD</p><h2 id="dialogTitle">Add customer</h2></div><button class="icon-button" type="button" id="closeDialog" aria-label="Close">×</button></div>
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <label class="wide">Company name <em>*</em><input name="company" required maxlength="100" placeholder="e.g. Midwest Auto Supply"></label>
+        <label>Contact person<input name="contact" maxlength="80" placeholder="Full name"></label>
+        <label>Email<input name="email" type="email" maxlength="120" placeholder="name@company.com"></label>
+        <label>Phone<input name="phone" type="tel" maxlength="40" placeholder="(555) 123-4567"></label>
+        <label>Website<input name="website" type="url" maxlength="200" placeholder="https://example.com"></label>
+        <label>City<input name="city" maxlength="80"></label>
+        <label>State<select name="state" id="formState"></select></label>
+        <label>Customer type<select name="type" id="formType"></select></label>
+        <label>Main vehicles / brands<input name="brands" maxlength="160" placeholder="Ford, GM, Toyota…"></label>
+        <label class="wide">Interested products<input name="products" maxlength="200" placeholder="Brake pads, filters, suspension parts…"></label>
+        <label>Customer source<select name="source" id="formSource"></select></label>
+        <label>Follow-up status<select name="status" id="formStatus"></select></label>
+        <label>First contact date<input name="firstContact" type="date"></label>
+        <label>Last follow-up date<input name="lastFollowUp" type="date"></label>
+        <label>Next follow-up date<input name="nextFollowUp" type="date"></label>
+        <label class="wide">Notes<textarea name="notes" rows="4" maxlength="1000" placeholder="Add context, requirements, or next steps…"></textarea></label>
+      </div>
+      <div class="modal-actions"><button class="button ghost" type="button" id="cancelDialog">Cancel</button><button class="button primary" type="submit">Save customer</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
